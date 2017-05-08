@@ -1,0 +1,26 @@
+
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>IFSC Internet Banking</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header class="mFoundsText">SALDO</ion-card-header>
+    <ion-card-content class="mMoneyText">R$1000,00</ion-card-content>
+  </ion-card>
+
+  <ion-title class="mLastTransationText">ÚLTIMAS TRANSAÇÕES</ion-title>
+
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)" class="mButton">
+      {{ item }}
+    </button>
+  </ion-list>
+
+</ion-content>
