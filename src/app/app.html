@@ -7,8 +7,11 @@
 
   <ion-content>
     <ion-list >
-      <button ion-item (click)="teste()">
+      <button ion-item (click)="navigate(menuPage)">
         Home
+      </button>
+      <button ion-item (click)="navigate(usuarioPage)">
+        Usuário
       </button>
       <button ion-item (click)="navigate(loginPage)">
         Sair
@@ -17,4 +20,4 @@
   </ion-content>
 </ion-menu>
 
-<ion-nav [root]="rootPage" #content></ion-nav>
+<ion-nav [root]="rootPage" #content  swipeBackEnabled="true"></ion-nav>

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-
-import { Login } from '../login/login';
+import { IonicPage, MenuController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -18,7 +16,7 @@ export class Menu {
   '30 15:33 +R$3500,00 MEU PAGAMENTO',
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {}
+  constructor(public menuCtrl: MenuController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Menu');
@@ -28,5 +26,5 @@ export class Menu {
   itemSelected(item) {
 
   }
-  
+
 }
