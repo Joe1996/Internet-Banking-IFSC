@@ -8,6 +8,7 @@ import { Login } from '../login/login';
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
+
 export class Menu {
   items = [
   '13 15:33 -R$110,34 PAGAMENTO ÁGUA',
@@ -27,5 +28,5 @@ export class Menu {
   itemSelected(item) {
 
   }
-
+  
 }
