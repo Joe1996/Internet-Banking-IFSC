@@ -24,11 +24,6 @@ export class Menu {
     this.menuCtrl.enable(true);
   }
 
-  exit() {
-      this.navCtrl.push(Login);
-      this.navCtrl.setRoot(Login);
-  }
-
   itemSelected(item) {
 
   }
