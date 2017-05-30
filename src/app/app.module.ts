@@ -9,13 +9,16 @@ import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
 import { Menu } from '../pages/menu/menu';
 import { Usuario } from '../pages/usuario/usuario';
+import { Cadastro } from '../pages/cadastro/cadastro';
+import { Singleton } from '../pages/singleton';
 
 @NgModule({
   declarations: [
     MyApp,
     Login,
     Menu,
-    Usuario
+    Usuario,
+    Cadastro
   ],
   imports: [
     BrowserModule,
@@ -27,11 +30,13 @@ import { Usuario } from '../pages/usuario/usuario';
     MyApp,
     Login,
     Menu,
-    Usuario
+    Usuario,
+    Cadastro
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Singleton,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

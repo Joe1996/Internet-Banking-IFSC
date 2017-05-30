@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 
 import { Menu } from '../menu/menu';
+import { Cadastro } from '../cadastro/cadastro';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,10 @@ export class Login {
 
   goToMenu() {
     this.navCtrl.setRoot(Menu);
+  }
+
+  goToRegistration() {
+    this.navCtrl.push(Cadastro);
   }
 
 }

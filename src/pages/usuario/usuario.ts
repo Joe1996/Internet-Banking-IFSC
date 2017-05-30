@@ -12,8 +12,9 @@ import 'rxjs/add/operator/map';
 })
 export class Usuario {
 
-  private mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/mensagem?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
+  public msgs: Mensagem;
 
+  private mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/mensagem?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {}
 
@@ -30,21 +31,18 @@ export class Usuario {
     headers.append('Content-Type', 'application/json');
 
     this.http
-    .post(this.mUrl, JSON.stringify(msg), 'application/json')
+    .post(this.mUrl, JSON.stringify(msg), {headers: headers})
     .map(response => response.json())
     .subscribe(data => {console.log(data)});
   }
 
   buscarMensagem() {
-
     this.http
     .get(this.mUrl)
     .map(response => response.json())
     .subscribe(data => {
-        console.log(data)
+      this.msgs = data;
       });
-
-
   }
 
 }
