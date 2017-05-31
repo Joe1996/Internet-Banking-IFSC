@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Usuário</ion-title>
+    <ion-title>Meus dados</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -9,16 +9,34 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
-  <button class='button-azul' (click)='buscarMensagem()'>Pegar mensagem</button>
-  <button class='button-verde' (click)='enviarMensagem()'>Enviar mensagem</button>
+  <div>
+    <ion-title> Nome: {{ userLogged.name }} </ion-title>
+    <ion-title> Conta: {{ userLogged.number }} </ion-title>
+  </div>
+
+  <div>
+    <ion-title class="mDivTitle"> Alterar a senha do celular </ion-title>
+  </div>
 
   <ion-list>
-    <button ion-item *ngFor="let msg of msgs">
-      {{ msg.texto }}
-    </button>
+    <ion-item>
+      <ion-label floating>Senha atual</ion-label>
+      <ion-input type="password" [(ngModel)]="mPassword"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nova Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="mPassword"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Confirme a nova senha</ion-label>
+      <ion-input type="password" [(ngModel)]="mConfirmPassword"></ion-input>
+    </ion-item>
   </ion-list>
+
+  <div>
+    <button ion-button full class="mButtonChangePassword" (click)="validate()">Trocar a senha</button>
+  </div>
 
 </ion-content>

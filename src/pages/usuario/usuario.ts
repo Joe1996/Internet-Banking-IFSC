@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Mensagem } from '../model/mensagem';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+
+import { Account } from '../model/account';
+import { Singleton } from '../singleton'
 
 @IonicPage()
 @Component({
@@ -12,37 +14,68 @@ import 'rxjs/add/operator/map';
 })
 export class Usuario {
 
-  public msgs: Mensagem;
+  public userLogged = new Account();
 
-  private mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/mensagem?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
+  public mOldPassword = '';
+  public mPassword = '';
+  public mConfirmPassword = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public http: Http,
+    public singleton: Singleton,
+    public alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Usuario');
+    this.userLogged = this.singleton.getUserLogged();
   }
 
-  enviarMensagem() {
-    var msg = new Mensagem();
-    msg.titulo = 'Nova mensagem';
-    msg.texto = 'Mensagem do celular';
+  showMessageDialog(msg) {
+    let dialog = this.alertCtrl.create({
+      title: 'ATENÇÃO',
+      subTitle: msg,
+      buttons: ['OK']
+    });
+    dialog.present();
+  }
+
+  clearFields(oldPass) {
+    if (oldPass) {
+      this.mOldPassword = '';
+    }
+    this.mPassword = '';
+    this.mConfirmPassword = '';
+  }
+
+  changePassword() {
+    this.userLogged.password = this.mPassword;
+
+    var mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoMobile?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     this.http
-    .post(this.mUrl, JSON.stringify(msg), {headers: headers})
-    .map(response => response.json())
-    .subscribe(data => {console.log(data)});
+      .post(mUrl, JSON.stringify(this.userLogged), {headers: headers})
+      .map(response => response.json())
+      .subscribe(data => {
+      });
   }
 
-  buscarMensagem() {
-    this.http
-    .get(this.mUrl)
-    .map(response => response.json())
-    .subscribe(data => {
-      this.msgs = data;
-      });
+  validate() {
+    if (this.mOldPassword == this.userLogged.password) {
+      if (this.mPassword == this.mConfirmPassword) {
+        this.changePassword();
+      } else {
+        this.showMessageDialog("Senha atual não confere!");
+        this.clearFields(false);
+      }
+    } else {
+      this.showMessageDialog("Senha atual não confere!");
+      this.clearFields(true);
+    }
   }
 
 }

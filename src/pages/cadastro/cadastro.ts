@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 
 import { Http, Headers } from '@angular/http';
 import { Account } from '../model/account';
+import { AccountBank } from '../model/accountBank';
 import { Menu } from '../menu/menu';
 import 'rxjs/add/operator/map';
 
@@ -15,15 +16,24 @@ import { Singleton } from '../singleton';
 })
 export class Cadastro {
 
-  mAccountNumber = '';
-  mPassword = '';
-  mConfirmPassword = '';
+  public mAccountNumber = '';
+  public mAccountPassword = '';
+  public mPassword = '';
+  public mConfirmPassword = '';
 
-  private mUrlSearch = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoTeste';
-  private mUrlSend = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoMobile?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
+  private mUrlBank = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoTeste';
+  private mUrlBankMobile = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoMobile';
   private mApiKey = 'apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: Http, public singleton: Singleton) {}
+  public mAccountBank: AccountBank;
+  public mAccountMobile: Account;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public http: Http,
+    public singleton: Singleton) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Cadastro');
@@ -39,38 +49,62 @@ export class Cadastro {
   }
 
   sendData() {
-    var acc = new Account();
-    acc.number = this.mAccountNumber;
-    acc.password = this.mPassword;
-    acc.name = 'Nome de teste!';
+    this.mAccountMobile.number = this.mAccountNumber;
+    this.mAccountMobile.password = this.mPassword;
+    this.mAccountMobile.name = this.mAccountBank.nome;
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+    var auxUrl = this.mUrlBankMobile + "?" + this.mApiKey;
+
     this.http
-    .post(this.mUrlSend, JSON.stringify(acc), {headers: headers})
-    .map(response => response.json())
-    .subscribe(data => {
-      console.log(data);
-      this.navCtrl.setRoot(Menu);
-      this.singleton.setUserLogged(acc);
-    });
+      .post(auxUrl, JSON.stringify(this.mAccountMobile), {headers: headers})
+      .map(response => response.json())
+      .subscribe(data => {
+        this.mAccountMobile = data[0];
+        this.navCtrl.setRoot(Menu);
+        this.singleton.setUserLogged(this.mAccountMobile);
+      });
 
   }
 
-  checkIfAccountExists() {
-    var accNumber = '?q={"numeroConta": \'' + this.mAccountNumber + '\' }&';
-    var auxUrl = this.mUrlSearch + accNumber + this.mApiKey;
+  searchForAccount() {
+    var accNumber = '?q={"numero": \'' + this.mAccountNumber + '\' }&';
+    var auxUrl = this.mUrlBank + accNumber + this.mApiKey;
 
     this.http
-    .get(auxUrl)
-    .map(response => response.json())
-    .subscribe(data => {
+      .get(auxUrl)
+      .map(response => response.json())
+      .subscribe(data => {
         if (data != null && data != '') {
-          this.sendData();
+          this.mAccountBank = data[0];
+          if(this.mAccountBank.senha == this.mAccountPassword) {
+            this.searchForAccountMobile();
+          } else {
+            this.showMessageDialog("Senha da conta incorreta!");
+            this.clearFields(false);
+          }
         } else {
-          this.showMessageDialog("Você precisa de uma conta ativa!");
+          this.showMessageDialog("Conta inexistente!");
           this.clearFields(false);
+        }
+      });
+  }
+
+  searchForAccountMobile() {
+    var accNumber = '?q={"number": \'' + this.mAccountNumber + '\' }&';
+    var auxUrl = this.mUrlBankMobile + accNumber + this.mApiKey;
+
+    this.http
+      .get(auxUrl)
+      .map(response => response.json())
+      .subscribe(data => {
+        if (data != null && data != '') {
+          this.showMessageDialog("Conta já cadastrada!");
+          this.clearFields(false);
+        } else {
+          this.sendData();
         }
       });
   }
@@ -83,13 +117,14 @@ export class Cadastro {
       this.mAccountNumber = '';
       this.mPassword = '';
       this.mConfirmPassword = '';
+      this.mAccountPassword = '';
     }
   }
 
   register() {
     if (this.mAccountNumber != '' && this.mPassword != '' && this.mConfirmPassword != '') {
       if (this.mPassword == this.mConfirmPassword) {
-        this.checkIfAccountExists();
+        this.searchForAccount();
       } else {
         this.showMessageDialog('As senhas não conferem!');
         this.clearFields(true);
