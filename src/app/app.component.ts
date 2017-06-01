@@ -6,8 +6,9 @@ import { Singleton } from '../pages/singleton';
 
 import { Login } from '../pages/login/login';
 import { Menu } from '../pages/menu/menu';
-import { Usuario } from '../pages/usuario/usuario';
-import { Cadastro } from '../pages/cadastro/cadastro';
+import { User } from '../pages/user/user';
+import { Register } from '../pages/register/register';
+import { Extract } from '../pages/extract/extract';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,12 +20,17 @@ export class MyApp {
 
   loginPage:any = Login;
   menuPage:any = Menu;
-  usuarioPage:any = Usuario;
-  cadastroPage:any = Cadastro;
+  userPage:any = User;
+  registerPage:any = Register;
+  extractPage:any = Extract;
 
   pages: Array<{title: string, component: any}>
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public singleton: Singleton) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public singleton: Singleton) {
     this.initializeApp();
   }
 

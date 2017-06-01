@@ -1,9 +1,5 @@
 page-menu {
 
-  .mButton {
-    font-size: 13px;
-  }
-
   .mLastTransationText {
     width: 100%;
     text-align: center;
@@ -11,18 +7,12 @@ page-menu {
     margin-bottom: 10px;
   }
 
-  .mFoundsText {
+  .mLastLoginText {
     width: 100%;
     text-align: center;
+    margin-top: 10px;
     font-size: 15px;
-    font-weight: bold;
+    color: rgb(255,0,0);
   }
-
-  .mMoneyText {
-    width: 100%;
-    text-align: center;
-  }
-
-
 
 }

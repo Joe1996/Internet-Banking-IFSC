@@ -9,20 +9,6 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-title class="mLastTransationText">Bem vindo(a) {{ userLogged.name }}!</ion-title>
-
-  <ion-card>
-    <ion-card-header class="mFoundsText">SALDO</ion-card-header>
-    <ion-card-content class="mMoneyText">R$1000,00</ion-card-content>
-  </ion-card>
-
-  <ion-title class="mLastTransationText">ÚLTIMAS TRANSAÇÕES</ion-title>
-
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)" class="mButton">
-      {{ item }}
-    </button>
-  </ion-list>
-
+  <h4 class="mLastTransationText">Bem vindo(a) {{ userLogged.name }}!</h4>
+  <h6 class="mLastLoginText">Último login feito em: {{ userLogged.lastLogin | date: 'dd/MM/yyyy HH:mm:ss' }}!</h6>
 </ion-content>

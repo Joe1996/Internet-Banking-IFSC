@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Extrato</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let extract of extracts" class="mButton">
+      {{ extract.date | date: 'dd/MM HH:mm' }} {{ extract.description }} R${{ extract.value }}
+    </button>
+  </ion-list>
+  <ion-card>
+    <ion-card-header class="mFoundsText">SALDO</ion-card-header>
+    <ion-card-content class="mMoneyText">R$1000,00</ion-card-content>
+  </ion-card>
+</ion-content>

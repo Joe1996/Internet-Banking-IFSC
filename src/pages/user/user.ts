@@ -9,10 +9,10 @@ import { Singleton } from '../singleton'
 
 @IonicPage()
 @Component({
-  selector: 'page-usuario',
-  templateUrl: 'usuario.html',
+  selector: 'page-user',
+  templateUrl: 'user.html',
 })
-export class Usuario {
+export class User {
 
   public userLogged = new Account();
 
@@ -61,6 +61,14 @@ export class Usuario {
       .post(mUrl, JSON.stringify(this.userLogged), {headers: headers})
       .map(response => response.json())
       .subscribe(data => {
+        var response: Account;
+        response = data;
+        if (response.password == this.mPassword) {
+          this.showMessageDialog("Senha alterada com sucesso!");
+        } else {
+          this.showMessageDialog("Não foi possível alterar a senha!");
+        }
+        this.clearFields(true);
       });
   }
 

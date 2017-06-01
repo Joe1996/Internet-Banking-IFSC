@@ -11,10 +11,10 @@ import { Singleton } from '../singleton';
 
 @IonicPage()
 @Component({
-  selector: 'page-cadastro',
-  templateUrl: 'cadastro.html',
+  selector: 'page-register',
+  templateUrl: 'register.html',
 })
-export class Cadastro {
+export class Register {
 
   public mAccountNumber = '';
   public mAccountPassword = '';
@@ -49,6 +49,7 @@ export class Cadastro {
   }
 
   sendData() {
+    this.mAccountMobile = new Account();
     this.mAccountMobile.number = this.mAccountNumber;
     this.mAccountMobile.password = this.mPassword;
     this.mAccountMobile.name = this.mAccountBank.nome;
@@ -62,9 +63,9 @@ export class Cadastro {
       .post(auxUrl, JSON.stringify(this.mAccountMobile), {headers: headers})
       .map(response => response.json())
       .subscribe(data => {
-        this.mAccountMobile = data[0];
-        this.navCtrl.setRoot(Menu);
+        this.mAccountMobile = data;
         this.singleton.setUserLogged(this.mAccountMobile);
+        this.navCtrl.setRoot(Menu);
       });
 
   }

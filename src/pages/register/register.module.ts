@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Cadastro } from './cadastro';
+import { Register } from './register';
 
 @NgModule({
   declarations: [
-    Cadastro,
+    Register,
   ],
   imports: [
-    IonicPageModule.forChild(Cadastro),
+    IonicPageModule.forChild(Register),
   ],
   exports: [
-    Cadastro
+    Register
   ]
 })
 export class CadastroModule {}

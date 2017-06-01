@@ -8,8 +8,10 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
 import { Menu } from '../pages/menu/menu';
-import { Usuario } from '../pages/usuario/usuario';
-import { Cadastro } from '../pages/cadastro/cadastro';
+import { User } from '../pages/user/user';
+import { Register } from '../pages/register/register';
+import { Extract } from '../pages/extract/extract';
+
 import { Singleton } from '../pages/singleton';
 
 @NgModule({
@@ -17,8 +19,9 @@ import { Singleton } from '../pages/singleton';
     MyApp,
     Login,
     Menu,
-    Usuario,
-    Cadastro
+    User,
+    Register,
+    Extract
   ],
   imports: [
     BrowserModule,
@@ -30,8 +33,9 @@ import { Singleton } from '../pages/singleton';
     MyApp,
     Login,
     Menu,
-    Usuario,
-    Cadastro
+    User,
+    Register,
+    Extract
   ],
   providers: [
     StatusBar,

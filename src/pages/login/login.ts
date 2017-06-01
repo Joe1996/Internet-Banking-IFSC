@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController, AlertController } from 'ionic-angular';
 
 import { Menu } from '../menu/menu';
-import { Cadastro } from '../cadastro/cadastro';
+import { Register } from '../register/register';
 
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Account } from '../model/account';
 import 'rxjs/add/operator/map';
 
@@ -56,17 +56,39 @@ export class Login {
       .subscribe(data => {
         if (data != undefined && data != '') {
           this.account = data[0];
-          if (this.account == undefined && this.account.password != this.mPassword) {
+          if (this.account == undefined || this.account.password != this.mPassword) {
             this.showMessageDialog("Senha incorreta!");
             this.account = new Account();
           } else {
             this.singleton.setUserLogged(this.account);
             this.navCtrl.setRoot(Menu);
+            this.updateLastLoginDate();
           }
         } else {
           this.showMessageDialog("Esta conta não existe!");
         }
     });
+
+  }
+
+  updateLastLoginDate() {
+    var mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoMobile?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
+
+    this.account.lastLogin = new Date().toLocaleString();
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    this.http
+      .post(mUrl, JSON.stringify(this.account), {headers: headers})
+      .map(response => response.json())
+      .subscribe(data => {
+        if (data != undefined) {
+          console.log("MLAB - Data de login atualizada!");
+        } else {
+          console.log("MLAB - Data de login NÃO atualizada!");
+        }
+      });
 
   }
 
@@ -79,7 +101,7 @@ export class Login {
   }
 
   goToRegistration() {
-    this.navCtrl.push(Cadastro);
+    this.navCtrl.push(Register);
   }
 
 }
