@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController} from 'ionic-angular';
 
 import { Http, Headers } from '@angular/http';
 import { Account } from '../model/account';
@@ -31,9 +31,10 @@ export class Register {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl: AlertController,
     public http: Http,
-    public singleton: Singleton) {}
+    public singleton: Singleton,
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Cadastro');
@@ -48,11 +49,20 @@ export class Register {
     confirm.present();
   }
 
+  showMessageToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000
+    });
+    toast.present();
+  }
+
   sendData() {
     this.mAccountMobile = new Account();
     this.mAccountMobile.number = this.mAccountNumber;
     this.mAccountMobile.password = this.mPassword;
     this.mAccountMobile.name = this.mAccountBank.nome;
+    this.mAccountMobile.balance = this.mAccountBank.saldo;
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -83,11 +93,11 @@ export class Register {
           if(this.mAccountBank.senha == this.mAccountPassword) {
             this.searchForAccountMobile();
           } else {
-            this.showMessageDialog("Senha da conta incorreta!");
+            this.showMessageToast("Senha da conta incorreta!");
             this.clearFields(false);
           }
         } else {
-          this.showMessageDialog("Conta inexistente!");
+          this.showMessageToast("Conta inexistente!");
           this.clearFields(false);
         }
       });
@@ -127,11 +137,11 @@ export class Register {
       if (this.mPassword == this.mConfirmPassword) {
         this.searchForAccount();
       } else {
-        this.showMessageDialog('As senhas não conferem!');
+        this.showMessageToast('As senhas não conferem!');
         this.clearFields(true);
       }
     } else {
-      this.showMessageDialog('Todos os campos são obrigatórios!');
+      this.showMessageToast('Todos os campos são obrigatórios!');
       this.clearFields(false);
     }
   }

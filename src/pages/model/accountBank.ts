@@ -4,6 +4,7 @@ export class AccountBank {
   public numeroConta = '';
   public senha = '';
   public nome = '';
+  public saldo = '';
 
   constructor() {}
 }

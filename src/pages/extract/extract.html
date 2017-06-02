@@ -7,14 +7,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
-    <button ion-item *ngFor="let extract of extracts" class="mButton">
-      {{ extract.date | date: 'dd/MM HH:mm' }} {{ extract.description }} R${{ extract.value }}
-    </button>
+    <ion-row ion-item *ngFor="let extract of extracts">
+      <ion-col> {{ extract.date | date: 'dd/MM' }} </ion-col>
+      <ion-col> {{ extract.description }} </ion-col>
+      <ion-col> R${{ extract.value }} </ion-col>
+    </ion-row>
   </ion-list>
-  <ion-card>
-    <ion-card-header class="mFoundsText">SALDO</ion-card-header>
-    <ion-card-content class="mMoneyText">R$1000,00</ion-card-content>
-  </ion-card>
 </ion-content>

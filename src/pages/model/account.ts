@@ -5,6 +5,7 @@ export class Account {
   public password = '';
   public name = '';
   public lastLogin = new Date().toLocaleString();
+  public balance = '';
 
   constructor() {}
 }

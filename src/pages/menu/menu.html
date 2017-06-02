@@ -9,6 +9,14 @@
 </ion-header>
 
 <ion-content>
-  <h4 class="mLastTransationText">Bem vindo(a) {{ userLogged.name }}!</h4>
-  <h6 class="mLastLoginText">Último login feito em: {{ userLogged.lastLogin | date: 'dd/MM/yyyy HH:mm:ss' }}!</h6>
+
+  <ion-card class="mCard">
+    <h4 class="mLastTransationText">Bem vindo(a) {{ userLogged.name }}!</h4>
+    <h6 class="mLastLoginText">Último login feito em: {{ userLogged.lastLogin | date: 'dd/MM/yyyy HH:mm:ss' }}!</h6>
+  </ion-card>
+
+  <ion-card class="mMoneyCard">
+    <ion-card-content class="mMoneyText"> CONTA CORRENTE </ion-card-content>
+    <ion-card-content class="mMoneyText"> R$ {{ userLogged.balance }} </ion-card-content>
+  </ion-card>
 </ion-content>

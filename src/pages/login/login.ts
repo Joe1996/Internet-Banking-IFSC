@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, AlertController, ToastController} from 'ionic-angular';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { Menu } from '../menu/menu';
 import { Register } from '../register/register';
@@ -27,7 +28,9 @@ export class Login {
     public menuCtrl: MenuController,
     public alertCtrl: AlertController,
     public http: Http,
-    public singleton: Singleton) {}
+    public singleton: Singleton,
+    public locationAccuracy: LocationAccuracy,
+    public toastCtrl: ToastController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Login');
@@ -41,6 +44,26 @@ export class Login {
       buttons: ['OK']
     });
     dialog.present();
+  }
+
+  showMessageToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000
+    });
+    toast.present();
+  }
+
+  getLocation() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if(canRequest) {
+        this.locationAccuracy
+        .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+        .then(() => this.showMessageDialog("Localizado com sucesso!"),
+          error => this.showMessageDialog("Error requesting location permissions" + error)
+        );
+      }
+    });
   }
 
   searchForAccount() {
@@ -57,7 +80,7 @@ export class Login {
         if (data != undefined && data != '') {
           this.account = data[0];
           if (this.account == undefined || this.account.password != this.mPassword) {
-            this.showMessageDialog("Senha incorreta!");
+            this.showMessageToast("Senha incorreta!");
             this.account = new Account();
           } else {
             this.singleton.setUserLogged(this.account);
@@ -65,22 +88,30 @@ export class Login {
             this.updateLastLoginDate();
           }
         } else {
-          this.showMessageDialog("Esta conta não existe!");
+          this.showMessageToast("Conta inexiste!");
         }
     });
 
   }
 
   updateLastLoginDate() {
+    //this.getLocation();
+
     var mUrl = 'https://api.mlab.com/api/1/databases/primeiravez/collections/contasBancoMobile?apiKey=LY2LpWCk0i88f_5RkNtGA7EoGjA4JDMV';
 
-    this.account.lastLogin = new Date().toLocaleString();
+    var auxAccount = new Account();
+    auxAccount._id = this.account._id;
+    auxAccount.name = this.account.name;
+    auxAccount.number = this.account.number;
+    auxAccount.password = this.account.password;
+    auxAccount.lastLogin = new Date().toLocaleString();
+    auxAccount.balance = this.account.balance;
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     this.http
-      .post(mUrl, JSON.stringify(this.account), {headers: headers})
+      .post(mUrl, JSON.stringify(auxAccount), {headers: headers})
       .map(response => response.json())
       .subscribe(data => {
         if (data != undefined) {
@@ -96,7 +127,7 @@ export class Login {
     if (this.mAccountNumber != '' && this.mPassword != '') {
       this.searchForAccount();
     } else {
-      this.showMessageDialog("Todos os campos são obrigatórios!");
+      this.showMessageToast("Todos os campos são obrigatórios!");
     }
   }
 

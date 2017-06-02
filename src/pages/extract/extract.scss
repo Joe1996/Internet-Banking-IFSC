@@ -2,6 +2,7 @@ page-extract {
 
   .mButton {
     text-transform: uppercase;
+    font-size: 13px;
   }
 
   .mFoundsText {
@@ -14,6 +15,10 @@ page-extract {
   .mMoneyText {
     width: 100%;
     text-align: center;
+  }
+
+  .mCard {
+    height: 100%;
   }
 
 }

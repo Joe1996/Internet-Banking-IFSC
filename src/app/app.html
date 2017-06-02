@@ -7,17 +7,17 @@
 
   <ion-content>
     <ion-list >
-      <button ion-item (click)="navigate(menuPage)">
-        Home
+      <button menuClose ion-item (click)="navigate(menuPage)">
+        <ion-icon name="home"></ion-icon>  Home
       </button>
-      <button ion-item (click)="navigate(userPage)">
-        Meu cadastro
+      <button menuClose ion-item (click)="navigate(userPage)">
+        <ion-icon name="contact"></ion-icon>  Meu cadastro
       </button>
-      <button ion-item (click)="navigate(extractPage)">
-        Extrato
+      <button menuClose ion-item (click)="navigate(extractPage)">
+        <ion-icon name="cash"></ion-icon>  Extrato
       </button>
-      <button ion-item (click)="navigate(loginPage)">
-        Sair
+      <button menuClose ion-item (click)="navigate(loginPage)">
+        <ion-icon name="exit"></ion-icon>  Sair
       </button>
     </ion-list>
   </ion-content>

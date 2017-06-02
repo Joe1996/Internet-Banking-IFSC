@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
@@ -41,6 +42,7 @@ import { Singleton } from '../pages/singleton';
     StatusBar,
     SplashScreen,
     Singleton,
+    LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
