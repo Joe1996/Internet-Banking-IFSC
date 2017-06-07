@@ -8,11 +8,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-row ion-item *ngFor="let extract of extracts">
-      <ion-col> {{ extract.date | date: 'dd/MM' }} </ion-col>
-      <ion-col> {{ extract.description }} </ion-col>
-      <ion-col> R${{ extract.value }} </ion-col>
-    </ion-row>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-row ion-item *ngFor="let extract of extracts">
+        <ion-col> {{ extract.date | date: 'dd/MM' }} </ion-col>
+        <ion-col> {{ extract.description }} </ion-col>
+        <ion-col> R${{ extract.value }} </ion-col>
+      </ion-row>
+    </ion-list>
+  </ion-card>
 </ion-content>

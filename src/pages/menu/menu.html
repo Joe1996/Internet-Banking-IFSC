@@ -1,5 +1,4 @@
-
-<ion-header>
+<ion-header>  
   <ion-navbar color="primary">
     <ion-title>IFSC Internet Banking</ion-title>
     <button ion-button menuToggle>
@@ -9,14 +8,22 @@
 </ion-header>
 
 <ion-content>
+  <div #map id="map" class="mDivMap"></div>
 
-  <ion-card class="mCard">
-    <h4 class="mLastTransationText">Bem vindo(a) {{ userLogged.name }}!</h4>
-    <h6 class="mLastLoginText">Último login feito em: {{ userLogged.lastLogin | date: 'dd/MM/yyyy HH:mm:ss' }}!</h6>
+  <ion-card>
+    <ion-card-header class="mCardTitle">
+      Bem vindo(a) {{ userLogged.name }}!
+    </ion-card-header>
+    <ion-card-content class="mLastLoginText">
+      Último login feito em: {{ userLogged.lastLogin | date: 'dd/MM/yyyy HH:mm:ss' }}!
+    </ion-card-content>
+    <ion-card-content>
+
+    </ion-card-content>
   </ion-card>
 
   <ion-card class="mMoneyCard">
-    <ion-card-content class="mMoneyText"> CONTA CORRENTE </ion-card-content>
+    <ion-card-header class="mCardTitle"> CONTA CORRENTE </ion-card-header>
     <ion-card-content class="mMoneyText"> R$ {{ userLogged.balance }} </ion-card-content>
   </ion-card>
 </ion-content>

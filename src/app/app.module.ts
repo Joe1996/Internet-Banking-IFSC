@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
@@ -43,6 +44,7 @@ import { Singleton } from '../pages/singleton';
     SplashScreen,
     Singleton,
     LocationAccuracy,
+    GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

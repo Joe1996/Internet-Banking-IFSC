@@ -134,10 +134,15 @@ export class Register {
 
   register() {
     if (this.mAccountNumber != '' && this.mPassword != '' && this.mConfirmPassword != '') {
-      if (this.mPassword == this.mConfirmPassword) {
-        this.searchForAccount();
+      if (this.mPassword.length > 3) {
+        if (this.mPassword == this.mConfirmPassword) {
+          this.searchForAccount();
+        } else {
+          this.showMessageToast('As senhas não conferem!');
+          this.clearFields(true);
+        }
       } else {
-        this.showMessageToast('As senhas não conferem!');
+        this.showMessageToast('A senha deve ter pelo menos 4 digitos');
         this.clearFields(true);
       }
     } else {
